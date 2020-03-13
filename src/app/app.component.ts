@@ -11,6 +11,7 @@ import {Pattern} from './pattern.service';
 
 export class AppComponent {
   patterns: Pattern[] = []
+  shuffledPatterns: Pattern[] = []
   selectedOptions = [];
   submittedOptions = [];
   result: string;
@@ -49,6 +50,10 @@ export class AppComponent {
     return remainingPatterns;
   }
 
+  shufflePattern(): Pattern[]{
+    return Object.assign([], this.patterns).sort(() => Math.random() - 0.5);
+  }
+
   calculateResult(): number{
     let correct = 0;
 
@@ -84,6 +89,7 @@ export class AppComponent {
 
   constructor(private patternService: PatternService) { 
     this.patterns = patternService.items;
+    this.shuffledPatterns = this.shufflePattern();
     for(var i = 0; i< this.patterns.length; i++) {
       this.selectedOptions[i] = "";
     }

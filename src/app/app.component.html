@@ -1,7 +1,7 @@
 <h1>Can You Match These Design Patterns?</h1>
 <h3>Who Does What?</h3>
 
-<table class="table table-striped" *ngIf="patterns">
+<table class="table table-striped" *ngIf="shuffledPatterns">
   <thead>
     <tr>
       <th scope="col"></th>
@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pattern of patterns;">
+    <tr *ngFor="let pattern of shuffledPatterns;">
       <td scope="row" id="{{pattern.id}}">
         <p class="{{correct(pattern.id)}}">
           <i style="color:green;" class="fas fa-check-circle fa"></i>
