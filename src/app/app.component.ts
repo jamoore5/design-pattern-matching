@@ -11,14 +11,14 @@ import {Pattern} from './pattern.service';
 
 export class AppComponent {
   patterns: Pattern[] = []
-  selectedOption = [];
-  submittedOption = [];
+  selectedOptions = [];
+  submittedOptions = [];
   result: string;
 
   wrong(idx: number): string{
-    if(this.selectedOption[idx] == -1 || this.submittedOption[idx] != this.selectedOption[idx] ||
-        (this.submittedOption[idx] == this.selectedOption[idx] &&
-         this.selectedOption[idx] == idx)){
+    if(this.selectedOptions[idx] == -1 || this.submittedOptions[idx] != this.selectedOptions[idx] ||
+        (this.submittedOptions[idx] == this.selectedOptions[idx] &&
+         this.selectedOptions[idx] == idx)){
       return "hide";
     } 
 
@@ -26,8 +26,8 @@ export class AppComponent {
   }
 
   correct(idx: number): string{
-    if(this.submittedOption[idx] == this.selectedOption[idx] &&
-       this.selectedOption[idx] == idx){
+    if(this.submittedOptions[idx] == this.selectedOptions[idx] &&
+       this.selectedOptions[idx] == idx){
       return "";
     } 
 
@@ -35,43 +35,57 @@ export class AppComponent {
   }
 
   disableSubmit(): boolean{
-    return this.selectedOption.includes("-1");
+    return this.selectedOptions.includes("-1");
   }
 
   remainingPatterns(idx: string): Pattern[]{
     let remainingPatterns : Pattern[] = [];
 
     this.patterns.forEach((pattern) => {
-      if (this.selectedOption[idx] == pattern.id || !this.selectedOption.includes(pattern.id)){
+      if (this.selectedOptions[idx] == pattern.id || !this.selectedOptions.includes(pattern.id)){
         remainingPatterns.push(pattern)
       }
     });
     return remainingPatterns;
   }
 
-  submit(): void{
+  calculateResult(): number{
     let correct = 0;
 
     for(var i = 0; i< this.patterns.length; i++) { 
-      this.submittedOption[i] = this.selectedOption[i];
+      this.submittedOptions[i] = this.selectedOptions[i];
 
-      if (this.patterns[i].id == this.selectedOption[i]){
+      if (this.patterns[i].id == this.selectedOptions[i]){
         correct++;
         console.log(this.patterns[i].name + " is correct!")
       } 
     }
 
-    this.result = "You got " + correct + "/" + this.patterns.length + " right.";
+    return correct;
+  }
 
+  setResult(correct: number): void{
+    if (correct == this.patterns.length){
+      this.result = "Congratulations, you got this all right!";
+    }
+    else if(correct == 0){
+      this.result = "Sorry, you did not get any correct."
+    }
+    else{
+      this.result = "You got " + correct + " out of " + this.patterns.length + " correct.";
+    }
+  }
+
+  submit(): void{
+    let correct = this.calculateResult();
+    this.setResult(correct);
     console.log(this.result)
   }
 
-  constructor(
-    private patternService: PatternService
-  ) { 
+  constructor(private patternService: PatternService) { 
     this.patterns = patternService.items;
     for(var i = 0; i< this.patterns.length; i++) {
-      this.selectedOption[i] = "";
+      this.selectedOptions[i] = "";
     }
   }
 }
