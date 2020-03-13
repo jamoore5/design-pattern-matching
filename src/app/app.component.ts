@@ -36,17 +36,19 @@ export class AppComponent {
   }
 
   disableSubmit(): boolean{
-    return this.selectedOptions.includes("-1");
+    /* console.log(this.patterns.map(p => p.name)); */
+    return this.selectedOptions.includes("");
   }
 
-  remainingPatterns(idx: string): Pattern[]{
+  remainingPatterns(idx: number): Pattern[]{
     let remainingPatterns : Pattern[] = [];
 
-    this.patterns.forEach((pattern) => {
-      if (this.selectedOptions[idx] == pattern.id || !this.selectedOptions.includes(pattern.id)){
-        remainingPatterns.push(pattern)
+    for(var i = 0; i< this.patterns.length; i++) {
+      if (this.selectedOptions[idx] == i.toString() || !this.selectedOptions.includes(i.toString())){
+        remainingPatterns.push(this.patterns[i])
       }
-    });
+    }
+
     return remainingPatterns;
   }
 
@@ -60,7 +62,7 @@ export class AppComponent {
     for(var i = 0; i< this.patterns.length; i++) { 
       this.submittedOptions[i] = this.selectedOptions[i];
 
-      if (this.patterns[i].id == this.selectedOptions[i]){
+      if (i == this.selectedOptions[i]){
         correct++;
         console.log(this.patterns[i].name + " is correct!")
       } 

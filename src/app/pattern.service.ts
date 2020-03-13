@@ -7,30 +7,48 @@ import { Injectable } from '@angular/core';
 export class PatternService {
   items: Pattern[] = [
     {
-      id: "0",
-      name: "Template Method",
-      description: "Subclasses decide how to implement steps in an algorithm"
-    },{
-      id: "1",
-      name: "Strategy",
-      description: "Encapsulate interchangable behaviour and use delegation to descide which behaviour to use"
+      name: "Abstract Factory",
+      description: "Allows a client to create families of objects without specifying their concrete classes"
     }, {
-      id: "2",
-      name: "Factory Method",
-      description: "Subclasses decide which concrete classes to create"
-    }, {
-      id: "3",
-      name: "Decorator",
-      description: "Doesn't Alter the interface, but adds responsibility"
-    }, {
-      id: "4",
       name: "Adapter",
       description: "Converts one interface to another"
     }, {
-      id: "5",
+      name: "Command",
+      description: "Encapsulates a request as an object"
+    }, {
+      name: "Composite",
+      description: "Client treats collection of objects and individual objects uniformly"
+    }, {
+      name: "Decorator",
+      description: "Doesn't alter the interface, but adds responsibility"
+    }, {
       name: "Facade",
       description: "Makes the interface simpler"
-    }
+    }, {
+      name: "Factory Method",
+      description: "Subclasses decide which concrete classes to create"
+    }, {
+      name: "Iterator",
+      description: "Provides a way to traverse a collection of objects without exposing the collection's implementation"
+    }, {
+      name: "Observer",
+      description: "Allow a group of objects to be notified when some state changes"
+    }, {
+      name: "Proxy",
+      description: "Simplifies the interface to a set of classes"
+    }, {
+      name: "Singleton",
+      description: "Ensures only one object is created"
+    }, {
+      name: "State",
+      description: "Encapsulate state-based behaviour and delegate behaviour to the current state"
+    }, {
+      name: "Strategy",
+      description: "Encapsulate interchangeable behaviour and use delegation to decide which behaviour to use"
+    }, {
+      name: "Template Method",
+      description: "Subclasses decide how to implement steps in an algorithm"
+    }   
   ]
   
    /**
@@ -39,7 +57,6 @@ export class PatternService {
 }
 
 export interface Pattern {
-  id: String;
   name: String;
   description: String;
 }

@@ -1,5 +1,10 @@
-<h1>Can You Match These Design Patterns?</h1>
-<h3>Who Does What?</h3>
+
+<div class="jumbotron" style="margin-top: 2em; text-align: center;">
+  <h1 class="display-3">Can You Match These Design Patterns?</h1>
+  <hr>
+  <br>
+  <h3 class="display-5">Who Does What?</h3>
+</div>
 
 <table class="table table-striped" *ngIf="shuffledPatterns">
   <thead>
@@ -11,18 +16,18 @@
   </thead>
   <tbody>
     <tr *ngFor="let pattern of shuffledPatterns;">
-      <td scope="row" id="{{pattern.id}}">
-        <p class="{{correct(pattern.id)}}">
+      <td scope="row" id="{{patterns.indexOf(pattern)}}">
+        <p class="{{correct(patterns.indexOf(pattern))}}">
           <i style="color:green;" class="fas fa-check-circle fa"></i>
         </p>
-        <p class="{{wrong(pattern.id)}}">
+        <p class="{{wrong(patterns.indexOf(pattern))}}">
           <i style="color:red;" class="fas fa-times-circle fa"></i>
         </p>
       </td>
       <td>
-        <select style="width:200px" class="is-invalid" *ngIf="patterns" [(ngModel)]=selectedOptions[pattern.id]>
+        <select style="width:200px" class="is-invalid" *ngIf="patterns" [(ngModel)]=selectedOptions[patterns.indexOf(pattern)]>
           <option value=""></option>
-          <option *ngFor="let p of remainingPatterns(pattern.id)" value={{p.id}}>
+          <option *ngFor="let p of remainingPatterns(patterns.indexOf(pattern))" value={{patterns.indexOf(p)}}>
             {{p.name}} 
           </option>
         </select>
@@ -32,11 +37,14 @@
   </tbody>
 </table>
 
-<button (click)="submit()" [disabled]="disableSubmit()" type="button" class="btn btn-primary">Submit</button> <span *ngIf="disableSubmit()"> Please choose a pattern for all the descriptions</span>
+<div class="submit">
+   <h6 *ngIf="disableSubmit()"> Please select a pattern for each of the descriptions</h6>
+  <button (click)="submit()" [disabled]="disableSubmit()" type="button" class="btn btn-primary">Submit</button>
+</div>
 
 <div class="jumbotron" style="margin-top: 2em; text-align: center;" *ngIf="result">
 
-  <p class="lead">{{result}}</p>
+  <h3 class="display-5">{{result}}</h3>
 
   <hr>
 
