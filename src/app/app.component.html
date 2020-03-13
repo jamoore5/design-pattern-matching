@@ -9,9 +9,35 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pattern of patterns">
-      <td scope="row">{{pattern.name}}</td>
+    <tr *ngFor="let pattern of patterns;">
+      <td scope="row" id="{{pattern.id}}">
+        <select *ngIf="patterns" [(ngModel)]="selectedOption[pattern.id]">
+          <option value=""></option>
+          <option *ngFor="let p of patterns" value="{{p.id}}">
+            {{p.name}}
+          </option>
+        </select>
+      </td>
       <td>{{pattern.description}}</td>
     </tr>
   </tbody>
 </table>
+
+<button (click)="submit()" type="button" class="btn btn-primary">Submit</button>
+
+<div class="jumbotron" style="margin-top: 2em; text-align: center;" *ngIf="submitted">
+
+  <p class="lead">{{result}}</p>
+
+  <hr>
+
+  <h5 class="display-4"> Tell me and</h5>
+  <h4 class="display-2"> I forget </h4>
+  <br>
+  <h5 class="display-4"> Teach me and</h5>
+  <h4 class="display-2"> I remember </h4>
+  <br>
+  <h5 class="display-4"> Involve me and</h5>
+  <h4 class="display-2"> I learn </h4>
+
+</div>
