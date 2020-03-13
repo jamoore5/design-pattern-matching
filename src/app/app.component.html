@@ -4,6 +4,7 @@
 <table class="table table-striped" *ngIf="patterns">
   <thead>
     <tr>
+      <th scope="col"></th>
       <th scope="col">Pattern</th>
       <th scope="col">Description</th>
     </tr>
@@ -11,10 +12,18 @@
   <tbody>
     <tr *ngFor="let pattern of patterns;">
       <td scope="row" id="{{pattern.id}}">
-        <select *ngIf="patterns" [(ngModel)]="selectedOption[pattern.id]">
-          <option value=""></option>
-          <option *ngFor="let p of patterns" value="{{p.id}}">
-            {{p.name}}
+        <p class="{{correct(pattern.id)}}">
+          <i style="color:green;" class="fas fa-check-circle fa"></i>
+        </p>
+        <p class="{{wrong(pattern.id)}}">
+          <i style="color:red;" class="fas fa-times-circle fa"></i>
+        </p>
+      </td>
+      <td>
+        <select class="is-invalid" *ngIf="patterns" [(ngModel)]=selectedOption[pattern.id]>
+          <option value=-1></option>
+          <option *ngFor="let p of patterns" value={{p.id}}>
+            {{p.name}} 
           </option>
         </select>
       </td>
@@ -23,9 +32,9 @@
   </tbody>
 </table>
 
-<button (click)="submit()" type="button" class="btn btn-primary">Submit</button>
+<button (click)="submit()" [disabled]="disableSubmit()" type="button" class="btn btn-primary">Submit</button> <span *ngIf="disableSubmit()"> Please choose a pattern for all the descriptions</span>
 
-<div class="jumbotron" style="margin-top: 2em; text-align: center;" *ngIf="submitted">
+<div class="jumbotron" style="margin-top: 2em; text-align: center;" *ngIf="result">
 
   <p class="lead">{{result}}</p>
 
