@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {PatternService} from './pattern.service';
+import {Pattern} from './pattern.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,16 +10,12 @@ import {PatternService} from './pattern.service';
 })
 
 export class AppComponent {
-  title = 'design-pattern-matching';
+  patterns: Pattern[] = []
   selectedOption = [];
   submittedOption = [];
   result: string;
 
-  submitted = false;
-
   wrong(idx: number): string{
-
-
     if(this.selectedOption[idx] == -1 || this.submittedOption[idx] != this.selectedOption[idx] ||
         (this.submittedOption[idx] == this.selectedOption[idx] &&
          this.selectedOption[idx] == idx)){
@@ -28,7 +26,6 @@ export class AppComponent {
   }
 
   correct(idx: number): string{
-
     if(this.submittedOption[idx] == this.selectedOption[idx] &&
        this.selectedOption[idx] == idx){
       return "";
@@ -41,11 +38,18 @@ export class AppComponent {
     return this.selectedOption.includes("-1");
   }
 
-  submit(): void{
-    if (!this.submitted){
-      this.submitted = true;
-    }
+  remainingPatterns(idx: string): Pattern[]{
+    let remainingPatterns : Pattern[] = [];
 
+    this.patterns.forEach((pattern) => {
+      if (this.selectedOption[idx] == pattern.id || !this.selectedOption.includes(pattern.id)){
+        remainingPatterns.push(pattern)
+      }
+    });
+    return remainingPatterns;
+  }
+
+  submit(): void{
     let correct = 0;
 
     for(var i = 0; i< this.patterns.length; i++) { 
@@ -55,8 +59,6 @@ export class AppComponent {
         correct++;
         console.log(this.patterns[i].name + " is correct!")
       } 
-
-
     }
 
     this.result = "You got " + correct + "/" + this.patterns.length + " right.";
@@ -64,15 +66,12 @@ export class AppComponent {
     console.log(this.result)
   }
 
-  patterns = []
-
   constructor(
     private patternService: PatternService
   ) { 
     this.patterns = patternService.items;
     for(var i = 0; i< this.patterns.length; i++) {
-      this.selectedOption[i] = "-1";
+      this.selectedOption[i] = "";
     }
   }
-  
 }
