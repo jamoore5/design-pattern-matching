@@ -73,7 +73,7 @@ export class AppComponent {
 
   setResult(correct: number): void{
     if (correct == this.patterns.length){
-      this.result = "Congratulations, you got this all right!";
+      this.result = "Congratulations, you got them all right!";
     }
     else if(correct == 0){
       this.result = "Sorry, you did not get any correct."
